@@ -35,6 +35,7 @@ def index():
         <title>Upload a file</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" type="text/css" href="/styles/style.css">
     </head>
     <body>
         <h1>Upload a file</h1>
@@ -64,6 +65,7 @@ def file_upload():
         <head>
             <title>File uploaded!</title>
             <meta charset="utf-8">
+            <link rel="stylesheet" type="text/css" href="/styles/style.css">
         </head>
         <body>
             <h1>Your file has been uploaded!</h1>
