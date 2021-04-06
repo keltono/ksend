@@ -1,13 +1,13 @@
 #! /usr/bin/env python
 
-from flask import Flask, flash, request, redirect, url_for, send_from_directory
+from flask import Flask, flash, request, redirect, url_for, send_from_directory, render_template
 from werkzeug.utils import secure_filename
 import os
 import string
 import random
 
 UPLOAD_FOLDER = "/mnt/.share"
-HOSTNAME = '0.0.0.0'
+HOSTNAME = "https://keltono.net/"
 PORT = 3982
 
 app = Flask(__name__)
@@ -23,15 +23,7 @@ def getRandomChars():
 
 @app.route("/", methods=['GET'])
 def index():
-    return '''
-    <!doctype html>
-    <title>Upload a file</title>
-    <h1>Upload a file</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
-    '''
+    render_template('templates/index.html')
 
 @app.route("/", methods=['POST'])
 def file_upload():
@@ -45,7 +37,9 @@ def file_upload():
     if file and allowed_file(file.filename):
         filename =  '.' + getRandomChars() + '_' + secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        return redirect(app.config['HOSTNAME'] + './share/' + filename)
+        forward = app.config['HOSTNAME'] + '.share/' + filename
+        print(forward)
+        return redirect(forward)
 
 # @app.route('/.share/<filename>')
 # def uploaded_file(filename):
