@@ -52,7 +52,7 @@ def file_upload():
         filename =  '.' + getRandomChars() + '_' + secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         forward = app.config['HOSTNAME'] + '.share/' + filename
-        print(forward)
+        #lol
         return '''
         <!doctype html>
         <head>
@@ -67,6 +67,19 @@ def file_upload():
         </body>
         <script>
             function copyLink(){
+                var elem = document.createElement("textarea");
+                document.body.appendChild(elem);
+                elem.value = %s;
+                elem.select();
+                document.execCommand("copy");
+                document.body.removeChild(elem);
+                if(getElementById("copied") !== null){
+                    const copied = document.createElement("h3")
+                    copied.setAttribute("id", "copied");
+                    document.body.appendChild(copied);
+
+                }
+
             }
         </script>
 
