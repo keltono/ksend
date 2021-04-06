@@ -22,7 +22,9 @@ app.config['HOSTNAME'] = os.environ.get('HOSTNAME',HOSTNAME)
 app.config['PORT'] = int(os.environ.get('PORT',PORT))
 
 def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() not in ["php","html"]
+    #YOLO
+    return True
+    # return '.' in filename and filename.rsplit('.', 1)[1].lower() not in ["php","html"]
 
 def getRandomChars():
     return ''.join(random.choices(string.ascii_letters + string.digits, k=16))
