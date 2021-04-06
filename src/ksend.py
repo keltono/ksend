@@ -23,7 +23,21 @@ def getRandomChars():
 
 @app.route("/", methods=['GET'])
 def index():
-    render_template('templates/index.html')
+    return '''
+    <!doctype html>
+    <head>
+        <title>Upload a file</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    </head>
+    <body>
+        <h1>Upload a file</h1>
+        <form method=post enctype=multipart/form-data>
+          <input type=file name=file id="file_input">
+          <input type=submit value=Upload>
+        </form>
+    </body>
+    '''
 
 @app.route("/", methods=['POST'])
 def file_upload():
@@ -39,7 +53,26 @@ def file_upload():
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         forward = app.config['HOSTNAME'] + '.share/' + filename
         print(forward)
-        return redirect(forward)
+        return '''
+        <!doctype html>
+        <head>
+            <title>File uploaded!</title>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        </head>
+        <body>
+            <h1>Your file has been uploaded!</h1>
+            <h1>It is located at <a href="%s">%s</a></h1>
+            <button onclick="copyLink()"> click here to copy the link to your clipboard </button>
+        </body>
+        <script>
+            function copyLink(){
+            }
+        </script>
+
+        ''' % (forward,forward,forward)
+
+        # return redirect(forward)
 
 # @app.route('/.share/<filename>')
 # def uploaded_file(filename):
