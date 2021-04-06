@@ -5,12 +5,18 @@ from werkzeug.utils import secure_filename
 import os
 import string
 import random
+import secrets
+
 
 UPLOAD_FOLDER = "/mnt/.share"
 HOSTNAME = "https://keltono.net/"
 PORT = 3982
 
 app = Flask(__name__)
+
+secret = secrets.token_urlsafe(32)
+app.secret_key = secret
+
 app.config['UPLOAD_FOLDER'] = os.environ.get('UPLOAD_FOLDER',UPLOAD_FOLDER)
 app.config['HOSTNAME'] = os.environ.get('HOSTNAME',HOSTNAME)
 app.config['PORT'] = int(os.environ.get('PORT',PORT))
@@ -58,28 +64,27 @@ def file_upload():
         <head>
             <title>File uploaded!</title>
             <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         </head>
         <body>
             <h1>Your file has been uploaded!</h1>
             <h1>It is located at <a href="%s">%s</a></h1>
             <button onclick="copyLink()"> click here to copy the link to your clipboard </button>
+            <h3 id="copied"></h3>
         </body>
         <script>
             function copyLink(){
                 var elem = document.createElement("textarea");
                 document.body.appendChild(elem);
-                elem.value = %s;
+                elem.value = "%s";
                 elem.select();
                 document.execCommand("copy");
                 document.body.removeChild(elem);
-                if(getElementById("copied") !== null){
-                    const copied = document.createElement("h3")
-                    copied.setAttribute("id", "copied");
-                    document.body.appendChild(copied);
-
+                let copied = document.getElementById("copied")
+                if(copied.innerHTML === ''){
+                    copied.innerHTML = "Copied!";
+                } else {
+                    copied.innerHTML += "<br /> Copied! (again)"
                 }
-
             }
         </script>
 
