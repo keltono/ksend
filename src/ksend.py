@@ -69,7 +69,8 @@ def file_upload():
         </head>
         <body>
             <h1>Your file has been uploaded!</h1>
-            <h1>It is located at <a href="%s">%s</a></h1>
+            <h1>It is located at<h1/>
+            <h1><a href="%s">%s</a></h1>
             <button onclick="copyLink()"> click here to copy the link to your clipboard </button>
             <h3 id="copied"></h3>
         </body>
