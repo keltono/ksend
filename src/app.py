@@ -21,6 +21,7 @@ app.config['UPLOAD_FOLDER'] = os.environ.get('UPLOAD_FOLDER',UPLOAD_FOLDER)
 app.config['HOSTNAME'] = os.environ.get('HOSTNAME',HOSTNAME)
 app.config['PORT'] = int(os.environ.get('PORT',PORT))
 
+
 def allowed_file(filename):
     #YOLO
     return True
@@ -31,7 +32,7 @@ def getRandomChars():
 
 @app.route("/", methods=['GET'])
 def index():
-    return render_template('templates/index.html')
+    return render_template('index.html')
 
 @app.route("/", methods=['POST'])
 def file_upload():
@@ -46,21 +47,21 @@ def file_upload():
         filename =  '.' + getRandomChars() + '_' + secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         share_link = app.config['HOSTNAME'] + '.share/' + filename
-        return render_template('templates/success.html',share_link=share_link)
+        return render_template('success.html',share_link=share_link)
 
 @app.route("/json",methods=['POST'])
 def file_upload_mobile():
     if 'file' not in request.files:
         flash('No file part')
-        return jsonify({"failed" : true, "failure_reason" : "no file", "file_url": ""})
+        return jsonify({"failed" : True, "failure_reason" : "no file", "file_url": ""})
     file = request.files['file']
     if file.filename == '':
-        return jsonify({"failed" : true, "failure_reason" : "no selected file", "file_url": ""})
+        return jsonify({"failed" : True, "failure_reason" : "no selected file", "file_url": ""})
     if file and allowed_file(file.filename):
         filename =  '.' + getRandomChars() + '_' + secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         share_link = app.config['HOSTNAME'] + '.share/' + filename
-        return jsonify({"failed" : false, "failure_reason" : "", "file_url": share_link})
+        return jsonify({"failed" : False, "failure_reason" : "", "file_url": share_link})
 
 def run():
     app.run("0.0.0.0", app.config['PORT'])
