@@ -31,7 +31,7 @@ def getRandomChars():
 
 @app.route("/", methods=['GET'])
 def index():
-    return render_template('index.html')
+    return render_template('templates/index.html')
 
 @app.route("/", methods=['POST'])
 def file_upload():
@@ -46,7 +46,7 @@ def file_upload():
         filename =  '.' + getRandomChars() + '_' + secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         share_link = app.config['HOSTNAME'] + '.share/' + filename
-        return render_template('success.html',share_link=share_link)
+        return render_template('templates/success.html',share_link=share_link)
 
 @app.route("/json",methods=['POST'])
 def file_upload_mobile():
