@@ -1,0 +1,30 @@
+<!doctype html>
+<head>
+    <title>File uploaded!</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/styles/style.css">
+</head>
+<body>
+    <h1>Your file has been uploaded!</h1>
+    <h1>It is located at<h1/>
+    <h1><a href="{{share_link}}">{{share_link}}</a></h1>
+    <button onclick="copyLink()"> click here to copy the link to your clipboard </button>
+    <h3 id="copied"></h3>
+</body>
+<script>
+    function copyLink(){
+        var elem = document.createElement("textarea");
+        document.body.appendChild(elem);
+        elem.value = "{{share_link}}";
+        elem.select();
+        document.execCommand("copy");
+        document.body.removeChild(elem);
+        let copied = document.getElementById("copied")
+        if(copied.innerHTML === ''){
+            copied.innerHTML = "Copied!";
+        } else {
+            copied.innerHTML += "<br /> Copied! (again)"
+        }
+    }
+</script>
+
