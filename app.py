@@ -8,6 +8,7 @@ import random
 import secrets
 
 
+#things to change if you are actually going to use this
 UPLOAD_FOLDER = "/mnt/.share"
 HOSTNAME = "https://keltono.net/"
 PORT = 3982
@@ -17,6 +18,7 @@ app = Flask(__name__)
 secret = secrets.token_urlsafe(32)
 app.secret_key = secret
 
+#you could also pass the config information via enviroment variables
 app.config['UPLOAD_FOLDER'] = os.environ.get('UPLOAD_FOLDER',UPLOAD_FOLDER)
 app.config['HOSTNAME'] = os.environ.get('HOSTNAME',HOSTNAME)
 app.config['PORT'] = int(os.environ.get('PORT',PORT))
@@ -24,9 +26,11 @@ app.config['PORT'] = int(os.environ.get('PORT',PORT))
 
 def allowed_file(filename):
     #YOLO
+    #(fine if you trust your users (such as if the page is behind http auth that only you have access to), terrible, bad, and stupid every other time)1
     return True
     # return '.' in filename and filename.rsplit('.', 1)[1].lower() not in ["php","html"]
 
+#psuedorandom, which is fine
 def getRandomChars():
     return ''.join(random.choices(string.ascii_letters + string.digits, k=16))
 
@@ -34,6 +38,7 @@ def getRandomChars():
 def index():
     return render_template('index.html')
 
+#check if the
 @app.route("/", methods=['POST'])
 def file_upload():
     if 'file' not in request.files:
@@ -49,6 +54,7 @@ def file_upload():
         share_link = app.config['HOSTNAME'] + '.share/' + filename
         return render_template('success.html',share_link=share_link)
 
+#same as the function above, just returning a json instead (for use in mobile/etc)
 @app.route("/json",methods=['POST'])
 def file_upload_mobile():
     if 'file' not in request.files:
