@@ -1,7 +1,0 @@
-ksend.py
-setup.py
-ksend.egg-info/PKG-INFO
-ksend.egg-info/SOURCES.txt
-ksend.egg-info/dependency_links.txt
-ksend.egg-info/entry_points.txt
-ksend.egg-info/top_level.txt
