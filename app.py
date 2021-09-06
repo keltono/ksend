@@ -25,10 +25,10 @@ app.config['PORT'] = int(os.environ.get('PORT',PORT))
 
 
 def allowed_file(filename):
-    #YOLO
-    #(fine if you trust your users (such as if the page is behind http auth that only you have access to), terrible, bad, and stupid every other time)1
+    #(fine if you trust your users (such as if the page is behind http auth that only you have access to), terrible, bad, and stupid every other time)
     return True
-    # return '.' in filename and filename.rsplit('.', 1)[1].lower() not in ["php","html"]
+    #what you should do if you do not vet users
+    #return '.' in filename and filename.rsplit('.', 1)[1].lower() not in ["php","html"]
 
 #psuedorandom, which is fine
 def getRandomChars():
@@ -38,7 +38,7 @@ def getRandomChars():
 def index():
     return render_template('index.html')
 
-#check if the
+#check if the upload is valid
 @app.route("/", methods=['POST'])
 def file_upload():
     if 'file' not in request.files:
